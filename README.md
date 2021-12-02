@@ -1,8 +1,10 @@
 # RxAssign
 
-Support Combine `assign` subscriber in RxSwift.
+Support Combine `Assign` subscriber in RxSwift.
 
-RxAssign extends Driver and Signal in RxCocoa.
+`Assign` uses a KeyPath which is really nice and useful.
+
+** RxAssign extends Driver and Signal in RxCocoa.
 
 ## At a Glance
 
