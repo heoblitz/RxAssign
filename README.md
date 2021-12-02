@@ -19,7 +19,7 @@ Signal.of("world")
     .disposed(by: disposeBag)
 ```
 
-without RxAssign
+These equivalent to `assign`
 1. Subscribe using emit(or drive) and assign.
 ```swift
 class Test {
@@ -36,10 +36,13 @@ Signal.of("world")
 2. Adopt ObserverType in Object and emit(or drive).
 
 
+## Requirements
+RxSwift, RxCocoa 5.0+ 
+
 ## Installation <a id="Installation"></a>
 
 ### Swift Package Manager
-Project > Project Dependencies > Add &nbsp; `https://github.com/heoblitz/SwiftPreview`  
+Project > Project Dependencies > Add &nbsp; `https://github.com/heoblitz/RxAssign`  
 
 
 ## License
