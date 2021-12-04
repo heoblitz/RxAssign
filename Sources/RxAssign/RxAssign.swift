@@ -46,6 +46,19 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
                        object[keyPath: keyPath] = e
                    }
     }
+    
+    public func assign<Root: AnyObject>(
+        to keyPath: ReferenceWritableKeyPath<Root, Element>,
+        on object: Root
+    ) -> Disposable {
+        MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
+        return self.asSharedSequence()
+                   .asObservable()
+                   .subscribe { [weak object] (e: Element) in
+                       guard let object = object else { return }
+                       object[keyPath: keyPath] = e
+                   }
+    }
 }
 
 extension SharedSequenceConvertibleType where SharingStrategy == SignalSharingStrategy {
@@ -57,6 +70,19 @@ extension SharedSequenceConvertibleType where SharingStrategy == SignalSharingSt
         return self.asSharedSequence()
                    .asObservable()
                    .subscribe { (e: Element) in
+                       object[keyPath: keyPath] = e
+                   }
+    }
+    
+    public func assign<Root: AnyObject>(
+        to keyPath: ReferenceWritableKeyPath<Root, Element>,
+        on object: Root
+    ) -> Disposable {
+        MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
+        return self.asSharedSequence()
+                   .asObservable()
+                   .subscribe { [weak object] (e: Element) in
+                       guard let object = object else { return }
                        object[keyPath: keyPath] = e
                    }
     }
