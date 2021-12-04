@@ -38,8 +38,8 @@ Signal.of("world")
 2. Adopt ObserverType in Object and emit(or drive).
 
 
-## Requirements
-RxSwift, RxCocoa 5.0+ 
+## Dependencies
+RxSwift, RxCocoa 6.0+ 
 
 ## Installation <a id="Installation"></a>
 

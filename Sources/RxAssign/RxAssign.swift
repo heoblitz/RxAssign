@@ -28,23 +28,22 @@
 
 import Foundation
 
-#if canImport(RxSwift) && canImport(RxCocoa)
-import RxSwift
 import RxCocoa
+import RxSwift
+
+private let errorMessage = "`drive*` family of methods can be only called from `MainThread`.\n" +
+"This is required to ensure that the last replayed `Driver` element is delivered on `MainThread`.\n"
 
 extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingStrategy {
     public func assign<Root>(
         to keyPath: ReferenceWritableKeyPath<Root, Element>,
         on object: Root
     ) -> Disposable {
-        let lock = NSLock()
-        
+        MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
         return self.asSharedSequence()
                    .asObservable()
                    .subscribe { (e: Element) in
-                       lock.lock()
                        object[keyPath: keyPath] = e
-                       lock.unlock()
                    }
     }
 }
@@ -54,15 +53,11 @@ extension SharedSequenceConvertibleType where SharingStrategy == SignalSharingSt
         to keyPath: ReferenceWritableKeyPath<Root, Element>,
         on object: Root
     ) -> Disposable {
-        let lock = NSLock()
-        
+        MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
         return self.asSharedSequence()
                    .asObservable()
                    .subscribe { (e: Element) in
-                       lock.lock()
                        object[keyPath: keyPath] = e
-                       lock.unlock()
                    }
     }
 }
-#endif
