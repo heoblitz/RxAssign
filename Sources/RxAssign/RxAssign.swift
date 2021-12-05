@@ -35,18 +35,6 @@ private let errorMessage = "`drive*` family of methods can be only called from `
 "This is required to ensure that the last replayed `Driver` element is delivered on `MainThread`.\n"
 
 extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingStrategy {
-    public func assign<Root>(
-        to keyPath: ReferenceWritableKeyPath<Root, Element>,
-        on object: Root
-    ) -> Disposable {
-        MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
-        return self.asSharedSequence()
-                   .asObservable()
-                   .subscribe { (e: Element) in
-                       object[keyPath: keyPath] = e
-                   }
-    }
-    
     public func assign<Root: AnyObject>(
         to keyPath: ReferenceWritableKeyPath<Root, Element>,
         on object: Root
@@ -62,18 +50,6 @@ extension SharedSequenceConvertibleType where SharingStrategy == DriverSharingSt
 }
 
 extension SharedSequenceConvertibleType where SharingStrategy == SignalSharingStrategy {
-    public func assign<Root>(
-        to keyPath: ReferenceWritableKeyPath<Root, Element>,
-        on object: Root
-    ) -> Disposable {
-        MainScheduler.ensureRunningOnMainThread(errorMessage: errorMessage)
-        return self.asSharedSequence()
-                   .asObservable()
-                   .subscribe { (e: Element) in
-                       object[keyPath: keyPath] = e
-                   }
-    }
-    
     public func assign<Root: AnyObject>(
         to keyPath: ReferenceWritableKeyPath<Root, Element>,
         on object: Root
