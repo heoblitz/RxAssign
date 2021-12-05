@@ -11,13 +11,13 @@ Support Combine `Assign` subscriber in RxSwift.
 Assign element with key path.
 ```swift
 Driver.of("hello")
-    .assign(to: \.text, on: titleLabel)
+    .assign(to: \.title, on: test)
     .disposed(by: disposeBag)
 ```
 
 ```swift
 Signal.of("world")
-    .assign(to: \.text, on: titleLabel)
+    .assign(to: \.test.title, on: self)
     .disposed(by: disposeBag)
 ```
 
@@ -28,7 +28,7 @@ class Test {
     var title: String = ""
 }
 
-Signal.of("world")
+Signal.of("hello")
     .emit { (title: String) in
         test.title = title
     }
@@ -36,7 +36,23 @@ Signal.of("world")
 ```
 
 2. Adopt ObserverType in Object and emit(or drive).
+```swift
+class Test: ObserverType {
+    typealias Element = String
+    
+    var title: String = ""
+    
+    func on(_ event: Event<String>) {
+        if case let .next(element) = event {
+            title = element
+        }
+    }
+}
 
+Driver.of("world")
+    .drive(test)
+    .disposed(by: disposeBag)
+```
 
 ## Dependencies
 RxSwift, RxCocoa 6.0+ 
@@ -46,6 +62,10 @@ RxSwift, RxCocoa 6.0+
 ### Swift Package Manager
 Project > Project Dependencies > Add &nbsp; `https://github.com/heoblitz/RxAssign`  
 
+### Cocoapods
+```ruby
+pod 'RxAssign'
+```
 
 ## License
 MIT
