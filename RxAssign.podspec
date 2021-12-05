@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
     s.homepage         = "https://github.com/heoblitz/RxAssign"
     s.license          = { :type => "MIT", :file => "LICENSE" }
     s.author           = { "heoblitz" => "qndlf22@naver.com" }
-    s.source           = { :git => "https://github.com/heoblitz/RxAssign",
+    s.source           = { :git => "https://github.com/heoblitz/RxAssign.git",
                            :tag => s.version.to_s }
     s.source_files = "Sources/**/*.{swift,h,m}"
     s.frameworks   = "Foundation"
